@@ -1,44 +1,40 @@
-/* - BASE HTML TEMPLATE
-------------------------------------------------- 
-	Description: JS Scripts
-	Author:Shane Prendergast
-	Author URL:http://www.webknit.co.uk
-	Template URL:http://base.webknit.co.uk/
-*/
+var width = 500;
+var height = 500;
 
-// JS EXAMPLE
+var padding = 50;
 
-var Base = Base || {};
+// Creates the initial SVG
+var viz = d3.select('#viz-wrapper').append('svg').attr('id', 'viz').attr('height', height).attr('width', width);
 
-Base.functionName = function()
-{	
-	var self = $(this);
-	var variable = $('.var');
+// Get the data
+d3.json('http://api.openweathermap.org/data/2.5/box/city?bbox=12,32,15,37,10&cluster=yes', function(data) {
 
-	function init()
-	{
-		variable.click(functionOne);
-		functionTwo();
-	}
+	dots = viz.selectAll('circle').data(data.list).enter().append('circle');
 
-	function functionOne()
-	{
-		// JS CODE
-	}
+	// Adding styles the the data
+	// d is the data and i the count
+	dots.attr('r', function(d, i) {
 
-	function functionTwo()
-	{
-		// JS CODE
-		window.hide();
-	}
+		console.log(d);
+		console.log(i);
+		return Math.abs(d.main.temp);
 
-	init();
-};
+	}).attr('cx', function(d) {
 
-// ON DOC READY
-$(function()
-{	
-	new Base.functionName();
-	
+		return Math.max(0 + padding, Math.random() * width - padding);
+
+	}).attr('cy', function(d) {
+
+		return Math.max(0 + padding, Math.random() * height - padding);
+
+	}).style('fill', function(d) {
+
+		var temp = d.main.temp;
+
+		if(temp > 20) return 'red';
+		if(temp > 14) return 'orange';
+		else return 'blue';
+
+	})
+
 });
-
