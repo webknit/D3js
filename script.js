@@ -33,7 +33,7 @@ d3.json('http://api.openweathermap.org/data/2.5/box/city?bbox=-3,54,1,50,10&clus
 
 		var Xcoord = ((lon - (-13.683333)) / (1.766667 - (-13.683333))) * 500;
 
-		console.log((d.coord.lon - -13.683333) / (1.766667 - 13.683333)) * 500;
+		console.log((d.coord.lon - -13.683333) / (1.766667 - 13.683333) * 100);
 
 		// Random onto canvas
 		//return Math.round(0 + padding, Math.random() * width - padding);
