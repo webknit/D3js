@@ -15,6 +15,12 @@ d3.json('http://api.openweathermap.org/data/2.5/box/city?bbox=-3,54,1,50,10&clus
 
 	dots = viz.selectAll('circle').data(data.list).enter().append('circle');
 
+	// southernmost and northernmost latitudes for the UK
+	// North: 60.85
+	// South: 49.85
+	// West: -13.683333
+	// East: 1.766667
+
 	// Adding styles the the data
 	// d is the data and i the count
 	dots.attr('r', function(d, i) {
@@ -23,11 +29,25 @@ d3.json('http://api.openweathermap.org/data/2.5/box/city?bbox=-3,54,1,50,10&clus
 
 	}).attr('cx', function(d) {
 
-		return Math.max(0 + padding, Math.random() * width - padding);
+		var lon = d.coord.lon;
+
+		var Xcoord = ((lon - (-13.683333)) / (1.766667 - (-13.683333))) * 500;
+
+		console.log((d.coord.lon - -13.683333) / (1.766667 - 13.683333)) * 500;
+
+		// Random onto canvas
+		//return Math.round(0 + padding, Math.random() * width - padding);
+		return Math.round(Xcoord);
 
 	}).attr('cy', function(d) {
 
-		return Math.max(0 + padding, Math.random() * height - padding);
+		var lat = d.coord.lat;
+
+		var Ycoord = ((lat - 60.85) / (49.85 - 60.85)) * 500;
+
+		// Random onto canvas
+		//return Math.max(0 + padding, Math.random() * height - padding);
+		return Math.round(Ycoord);
 
 	}).style('fill', function(d) {
 
